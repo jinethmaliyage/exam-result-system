@@ -13,6 +13,9 @@
             <button onclick="window.print()" class="btn btn-light fw-bold me-2">
                 <i class="fas fa-print me-2"></i>Print
             </button>
+            <a href="{{ route('results.download-pdf', $student->id) }}" class="btn btn-danger fw-bold me-2">
+                <i class="fas fa-file-pdf me-2"></i>Download PDF
+            </a>
             <a href="{{ route('students.index') }}" class="btn btn-light fw-bold">
                 <i class="fas fa-arrow-left me-2"></i>Back
             </a>
@@ -62,7 +65,7 @@
                             <tr>
                                 <td>{{ $result->subject->name }}</td>
                                 <td>{{ $result->exam->name }}</td>
-                                <td>{{ $result->marks_obtained }}</td>
+                                <td>{{ $result->marks_obtained }} / {{ $result->exam->total_marks }}</td>
                                 <td>
                                     <span class="badge" style="background:
                                         {{ in_array($result->grade, ['A+','A','A-']) ? '#28a745' :

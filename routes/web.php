@@ -17,3 +17,6 @@ Route::resource('results', ResultController::class);
 
 Route::get('/report-card/{studentId}', [ResultController::class, 'reportCard'])
      ->name('results.report-card');
+
+Route::get('/report-card/{studentId}/download', [ResultController::class, 'downloadPDF'])
+     ->name('results.download-pdf');

@@ -7,6 +7,7 @@ use App\Models\Student;
 use App\Models\Subject;
 use App\Models\Exam;
 use Illuminate\Http\Request;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class ResultController extends Controller
 {
@@ -65,6 +66,19 @@ class ResultController extends Controller
                          ->where('student_id', $studentId)->get();
         $averageGpa = $results->avg('gpa');
         return view('results.report-card', compact('student', 'results', 'averageGpa'));
+    }
+
+    public function downloadPDF($studentId)
+    {
+        $student = Student::findOrFail($studentId);
+        $results = Result::with(['subject', 'exam'])
+                         ->where('student_id', $studentId)->get();
+        $averageGpa = $results->avg('gpa');
+
+        $pdf = Pdf::loadView('results.report-card-pdf',
+                    compact('student', 'results', 'averageGpa'));
+
+        return $pdf->download('report-card-'.$student->student_id.'.pdf');
     }
 
     private function calculateGPA($percentage)
