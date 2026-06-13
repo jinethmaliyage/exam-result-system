@@ -91,6 +91,31 @@
     </div>
 </div>
 
+{{-- Charts Row --}}
+<div class="row g-4 mb-4">
+    <div class="col-lg-4">
+        <div class="card h-100">
+            <div class="card-header">
+                <i class="fas fa-chart-pie me-2 text-danger"></i>Pass / Fail Ratio
+            </div>
+            <div class="card-body d-flex align-items-center justify-content-center">
+                <canvas id="passFailChart" width="250" height="250"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-8">
+        <div class="card h-100">
+            <div class="card-header">
+                <i class="fas fa-chart-bar me-2 text-danger"></i>Grade Distribution
+            </div>
+            <div class="card-body">
+                <canvas id="gradeChart" height="120"></canvas>
+            </div>
+        </div>
+    </div>
+</div>
+
 {{-- Recent Results Table --}}
 <div class="row">
     <div class="col-12">
@@ -152,4 +177,62 @@
     </div>
 </div>
 
+@endsection
+
+@section('scripts')
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    var passFailChart = new Chart(document.getElementById('passFailChart'), {
+        type: 'doughnut',
+        data: {
+            labels: ['Pass', 'Fail'],
+            datasets: [{
+                data: [{{ $passCount }}, {{ $failCount }}],
+                backgroundColor: ['#28a745', '#dc3545'],
+                borderWidth: 0
+            }]
+        },
+        options: {
+            responsive: false,
+            plugins: {
+                legend: { position: 'bottom' }
+            }
+        }
+    });
+
+    var gradeLabels = <?php echo json_encode(array_keys($gradeData)); ?>;
+    var gradeValues = <?php echo json_encode(array_values($gradeData)); ?>;
+
+    var gradeChart = new Chart(document.getElementById('gradeChart'), {
+        type: 'bar',
+        data: {
+            labels: gradeLabels,
+            datasets: [{
+                label: 'Number of Students',
+                data: gradeValues,
+                backgroundColor: [
+                    '#28a745','#28a745','#28a745',
+                    '#17a2b8','#17a2b8','#17a2b8',
+                    '#ffc107','#ffc107',
+                    '#fd7e14',
+                    '#dc3545'
+                ],
+                borderRadius: 6,
+                borderWidth: 0
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: { display: false }
+            },
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    ticks: { stepSize: 1 }
+                }
+            }
+        }
+    });
+</script>
 @endsection

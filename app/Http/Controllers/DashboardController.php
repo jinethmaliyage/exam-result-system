@@ -18,9 +18,29 @@ class DashboardController extends Controller
         $recentResults = Result::with(['student', 'subject', 'exam'])
                                 ->latest()->take(5)->get();
 
+        // Chart Data - Pass/Fail
+        $passCount = Result::where('grade', '!=', 'F')->count();
+        $failCount = Result::where('grade', 'F')->count();
+
+        // Chart Data - Grade Distribution
+        $gradeData = [
+            'A+' => Result::where('grade', 'A+')->count(),
+            'A'  => Result::where('grade', 'A')->count(),
+            'A-' => Result::where('grade', 'A-')->count(),
+            'B+' => Result::where('grade', 'B+')->count(),
+            'B'  => Result::where('grade', 'B')->count(),
+            'B-' => Result::where('grade', 'B-')->count(),
+            'C+' => Result::where('grade', 'C+')->count(),
+            'C'  => Result::where('grade', 'C')->count(),
+            'D'  => Result::where('grade', 'D')->count(),
+            'F'  => Result::where('grade', 'F')->count(),
+        ];
+
         return view('dashboard', compact(
             'totalStudents', 'totalSubjects',
-            'totalExams', 'totalResults', 'recentResults'
+            'totalExams', 'totalResults',
+            'recentResults', 'passCount',
+            'failCount', 'gradeData'
         ));
     }
 }
