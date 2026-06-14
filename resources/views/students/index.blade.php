@@ -15,6 +15,38 @@
     </div>
 </div>
 
+{{-- Search Box --}}
+<div class="card mb-4">
+    <div class="card-body py-3">
+        <form action="{{ route('students.index') }}" method="GET">
+            <div class="input-group">
+                <span class="input-group-text" style="background:white;border-right:0;">
+                    <i class="fas fa-search text-muted"></i>
+                </span>
+                <input type="text" name="search" class="form-control"
+                    placeholder="Search by name, student ID, email or class..."
+                    value="{{ $search ?? '' }}"
+                    style="border-left:0;">
+                <button class="btn btn-primary px-4" type="submit">
+                    Search
+                </button>
+                @if($search)
+                <a href="{{ route('students.index') }}" class="btn btn-secondary px-4">
+                    Clear
+                </a>
+                @endif
+            </div>
+        </form>
+    </div>
+</div>
+
+@if($search)
+<p class="text-muted mb-3">
+    Search results for: <strong>"{{ $search }}"</strong>
+    — {{ $students->count() }} student(s) found
+</p>
+@endif
+
 <div class="card">
     <div class="card-body p-0">
         <table class="table table-hover mb-0">
@@ -63,7 +95,11 @@
                 <tr>
                     <td colspan="7" class="text-center py-4 text-muted">
                         <i class="fas fa-user-graduate fa-2x mb-2 d-block"></i>
-                        No students found. Add your first student!
+                        @if($search)
+                            No students found for "{{ $search }}"
+                        @else
+                            No students found. Add your first student!
+                        @endif
                     </td>
                 </tr>
                 @endforelse

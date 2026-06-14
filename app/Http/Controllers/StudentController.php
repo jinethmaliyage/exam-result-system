@@ -7,10 +7,18 @@ use Illuminate\Http\Request;
 
 class StudentController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $students = Student::all();
-        return view('students.index', compact('students'));
+        $search = $request->get('search');
+
+        $students = Student::when($search, function($query) use ($search) {
+            $query->where('name', 'like', '%'.$search.'%')
+                  ->orWhere('student_id', 'like', '%'.$search.'%')
+                  ->orWhere('email', 'like', '%'.$search.'%')
+                  ->orWhere('class', 'like', '%'.$search.'%');
+        })->get();
+
+        return view('students.index', compact('students', 'search'));
     }
 
     public function create()

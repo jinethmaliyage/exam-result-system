@@ -15,6 +15,56 @@
     </div>
 </div>
 
+{{-- Filter Box --}}
+<div class="card mb-4">
+    <div class="card-body py-3">
+        <form action="{{ route('results.index') }}" method="GET">
+            <div class="row g-3 align-items-end">
+                <div class="col-md-4">
+                    <label class="form-label fw-semibold">Filter by Subject</label>
+                    <select name="subject_id" class="form-select">
+                        <option value="">All Subjects</option>
+                        @foreach($subjects as $subject)
+                            <option value="{{ $subject->id }}"
+                                {{ $subjectFilter == $subject->id ? 'selected' : '' }}>
+                                {{ $subject->name }}
+                            </option>
+                        @endforeach
+                    </select>
+                </div>
+                <div class="col-md-4">
+                    <label class="form-label fw-semibold">Filter by Exam</label>
+                    <select name="exam_id" class="form-select">
+                        <option value="">All Exams</option>
+                        @foreach($exams as $exam)
+                            <option value="{{ $exam->id }}"
+                                {{ $examFilter == $exam->id ? 'selected' : '' }}>
+                                {{ $exam->name }} ({{ $exam->type }})
+                            </option>
+                        @endforeach
+                    </select>
+                </div>
+                <div class="col-md-4">
+                    <button class="btn btn-primary px-4 me-2" type="submit">
+                        <i class="fas fa-filter me-2"></i>Filter
+                    </button>
+                    @if($subjectFilter || $examFilter)
+                    <a href="{{ route('results.index') }}" class="btn btn-secondary px-4">
+                        <i class="fas fa-times me-2"></i>Clear
+                    </a>
+                    @endif
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+@if($subjectFilter || $examFilter)
+<p class="text-muted mb-3">
+    Showing filtered results — <strong>{{ $results->count() }}</strong> result(s) found
+</p>
+@endif
+
 <div class="card">
     <div class="card-body p-0">
         <table class="table table-hover mb-0">
@@ -70,7 +120,11 @@
                 <tr>
                     <td colspan="8" class="text-center py-4 text-muted">
                         <i class="fas fa-chart-bar fa-2x mb-2 d-block"></i>
-                        No results found!
+                        @if($subjectFilter || $examFilter)
+                            No results found for selected filters!
+                        @else
+                            No results found!
+                        @endif
                     </td>
                 </tr>
                 @endforelse
@@ -78,4 +132,4 @@
         </table>
     </div>
 </div>
-@endsection 
+@endsection

@@ -11,10 +11,27 @@ use Barryvdh\DomPDF\Facade\Pdf;
 
 class ResultController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $results = Result::with(['student', 'subject', 'exam'])->get();
-        return view('results.index', compact('results'));
+        $subjectFilter = $request->get('subject_id');
+        $examFilter    = $request->get('exam_id');
+
+        $results = Result::with(['student', 'subject', 'exam'])
+            ->when($subjectFilter, function($query) use ($subjectFilter) {
+                $query->where('subject_id', $subjectFilter);
+            })
+            ->when($examFilter, function($query) use ($examFilter) {
+                $query->where('exam_id', $examFilter);
+            })
+            ->get();
+
+        $subjects = Subject::all();
+        $exams    = Exam::all();
+
+        return view('results.index', compact(
+            'results', 'subjects', 'exams',
+            'subjectFilter', 'examFilter'
+        ));
     }
 
     public function create()
