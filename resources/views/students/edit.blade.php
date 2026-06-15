@@ -3,23 +3,29 @@
 @section('page-title', 'Edit Student')
 
 @section('content')
-<div class="page-header">
-    <div class="d-flex justify-content-between align-items-center">
-        <div>
-            <h3>✏️ Edit Student</h3>
-            <p>Update student information</p>
+<div class="pro-page">
+    <div class="pro-hero">
+        <div class="d-flex justify-content-between align-items-center flex-wrap gap-3">
+            <div class="d-flex align-items-center">
+                <div class="pro-hero-icon me-3">
+                    <i class="fas fa-user-edit"></i>
+                </div>
+                <div>
+                    <div class="pro-kicker">Student Profile</div>
+                    <h3>Edit Student</h3>
+                    <p>Update student contact, class, and academic year details.</p>
+                </div>
+            </div>
+            <a href="{{ route('students.index') }}" class="btn btn-light fw-bold">
+                <i class="fas fa-arrow-left me-2"></i>Back
+            </a>
         </div>
-        <a href="{{ route('students.index') }}" class="btn btn-light fw-bold">
-            <i class="fas fa-arrow-left me-2"></i>Back
-        </a>
     </div>
-</div>
 
-<div class="row justify-content-center">
-    <div class="col-lg-8">
-        <div class="card">
+    <div class="pro-form-shell">
+        <div class="card pro-card">
             <div class="card-header">
-                <i class="fas fa-user-edit me-2 text-danger"></i>Edit Student Information
+                <h5 class="pro-section-title"><i class="fas fa-id-card me-2 text-danger"></i>Edit Student Information</h5>
             </div>
             <div class="card-body p-4">
                 @if($errors->any())

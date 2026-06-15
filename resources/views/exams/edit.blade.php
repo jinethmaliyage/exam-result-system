@@ -3,23 +3,29 @@
 @section('page-title', 'Edit Exam')
 
 @section('content')
-<div class="page-header">
-    <div class="d-flex justify-content-between align-items-center">
-        <div>
-            <h3>✏️ Edit Exam</h3>
-            <p>Update exam information</p>
+<div class="pro-page">
+    <div class="pro-hero">
+        <div class="d-flex justify-content-between align-items-center flex-wrap gap-3">
+            <div class="d-flex align-items-center">
+                <div class="pro-hero-icon me-3">
+                    <i class="fas fa-pen-to-square"></i>
+                </div>
+                <div>
+                    <div class="pro-kicker">Assessment Schedule</div>
+                    <h3>Edit Exam</h3>
+                    <p>Update exam details used by result records.</p>
+                </div>
+            </div>
+            <a href="{{ route('exams.index') }}" class="btn btn-light fw-bold">
+                <i class="fas fa-arrow-left me-2"></i>Back
+            </a>
         </div>
-        <a href="{{ route('exams.index') }}" class="btn btn-light fw-bold">
-            <i class="fas fa-arrow-left me-2"></i>Back
-        </a>
     </div>
-</div>
 
-<div class="row justify-content-center">
-    <div class="col-lg-6">
-        <div class="card">
+    <div class="pro-form-shell narrow">
+        <div class="card pro-card">
             <div class="card-header">
-                <i class="fas fa-clipboard-list me-2 text-danger"></i>Edit Exam Information
+                <h5 class="pro-section-title"><i class="fas fa-clipboard-list me-2 text-danger"></i>Edit Exam Information</h5>
             </div>
             <div class="card-body p-4">
                 @if($errors->any())
@@ -70,4 +76,4 @@
         </div>
     </div>
 </div>
-@endsection 
+@endsection

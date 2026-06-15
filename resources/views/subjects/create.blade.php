@@ -3,23 +3,29 @@
 @section('page-title', 'Add Subject')
 
 @section('content')
-<div class="page-header">
-    <div class="d-flex justify-content-between align-items-center">
-        <div>
-            <h3>📚 Add New Subject</h3>
-            <p>Fill in the details to add a new subject</p>
+<div class="pro-page">
+    <div class="pro-hero">
+        <div class="d-flex justify-content-between align-items-center flex-wrap gap-3">
+            <div class="d-flex align-items-center">
+                <div class="pro-hero-icon me-3">
+                    <i class="fas fa-book-medical"></i>
+                </div>
+                <div>
+                    <div class="pro-kicker">Academic Catalog</div>
+                    <h3>Add Subject</h3>
+                    <p>Create a subject record with its code and credit hours.</p>
+                </div>
+            </div>
+            <a href="{{ route('subjects.index') }}" class="btn btn-light fw-bold">
+                <i class="fas fa-arrow-left me-2"></i>Back
+            </a>
         </div>
-        <a href="{{ route('subjects.index') }}" class="btn btn-light fw-bold">
-            <i class="fas fa-arrow-left me-2"></i>Back
-        </a>
     </div>
-</div>
 
-<div class="row justify-content-center">
-    <div class="col-lg-6">
-        <div class="card">
+    <div class="pro-form-shell narrow">
+        <div class="card pro-card">
             <div class="card-header">
-                <i class="fas fa-book me-2 text-danger"></i>Subject Information
+                <h5 class="pro-section-title"><i class="fas fa-book me-2 text-danger"></i>Subject Information</h5>
             </div>
             <div class="card-body p-4">
                 @if($errors->any())
